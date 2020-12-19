@@ -1,5 +1,7 @@
 # Ripen
-Ripen is an MIT source code project pipeline manager, it is a toolbox that can be scripted to manage single or multi-langage project from start to finish.
+Ripen is an MIT source code project pipeline manager, it is a toolbox that can be scripted to manage single or multi-langages project from start to finish.
+
+This will be the only thing you'll need to install to make your projects works.
 
 Ripen acts on these phases:
 
@@ -9,4 +11,8 @@ Ripen acts on these phases:
 
 3. Build: Build for multiple configuration targets simultaneously, monitors builds, (Experimental,C++) Use GPU CUDA cores for faster parallel build, cloud distributed build using IaC.
 
-4. Quality: Projects can specify rules that need to be followed before a push or commits can be done.
+4. Quality: Projects can specify rules that need to be followed before a push or commits can be done from the local work(like linting).
+
+5. Continuous Integration: Toolings for CI pipeline automation (Github Actions generation, Gitlab CI, etc...).
+
+6.Continuous Delivery: Toolings for CD pipeline automation.
