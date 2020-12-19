@@ -9,7 +9,7 @@ Ripen acts on these phases:
 
 2. Development: Ripen gives tooling for packages setups, test workflow, generators configuration, codes generation, templating(Boiler-plate && Snippet), documentation generation, test pipeline setup, generate interoperability interfaces in polyglot project and more.
 
-3. Build: Build for multiple configuration targets simultaneously, monitors builds, (Experimental,C++) Use GPU CUDA cores for faster parallel build, cloud distributed build using IaC.
+3. Build: Build for multiple configuration targets simultaneously, monitors builds, parallel build system, cloud distributed build using IaC.
 
 4. Quality: Projects can specify rules that need to be followed before a push or commits can be done from the local work(like linting).
 
