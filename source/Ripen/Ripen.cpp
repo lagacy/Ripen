@@ -1,10 +1,12 @@
-﻿// Ripen.cpp : définit le point d'entrée de l'application.
-//
-
+﻿
 #include "Ripen.h"
 
 using namespace std;
 
+/// <summary>
+/// Application entry point
+/// </summary>
+/// <returns></returns>
 int main()
 {
 	cout << "Hello CMake." << endl;

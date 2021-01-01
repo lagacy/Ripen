@@ -1,15 +1,47 @@
-﻿# CMakeList.txt : projet CMake pour Ripen, incluez la source et définissez
-# la logique spécifique au projet ici.
-#
+﻿
 cmake_minimum_required (VERSION 3.8)
 
 project ("Ripen")
 
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-# Ajoutez une source à l'exécutable de ce projet.
-add_subdirectory(Src)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/lib)
 
-# TODO: Ajoutez des tests et installez des cibles si nécessaire.
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/scripts")
+
+#Get the actual OS and store it as a preprocessor definition to be used in source code
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+add_compile_definitions(IS_LINUX)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+add_compile_definitions(IS_MACOS)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+add_compile_definitions(IS_WINDOWS)
+endif()
+
+# Get the actual compiler and store it as a preprocessor definition to be used in source code
+add_compile_definitions(COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}")
+
+if(CMAKE_CXX_COMPILER_ID MATCHES Intel)
+add_compile_definitions(IS_INTEL_CXX_COMPILER)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES GNU)
+add_compile_definitions(IS_GNU_CXX_COMPILER)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES PGI)
+add_compile_definitions(IS_PGI_CXX_COMPILER)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES XL)
+add_compile_definitions(IS_XL_CXX_COMPILER)
+elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+add_compile_definitions(IS_MSVC_CXX_COMPILER)
+endif()
+
+# See cmakelists in src folder
+include_directories("${PROJECT_SOURCE_DIR}/Src")
+add_subdirectory("Src")
+
+if(${BUILD_TESTS})
+	# See cmakelists in tests folder
+	include_directories("${PROJECT_SOURCE_DIR}/tests")
+	add_subdirectory("tests")
+endif(${BUILD_TESTS})
+
