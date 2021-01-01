@@ -1,47 +1,54 @@
 ﻿
 cmake_minimum_required (VERSION 3.8)
 
-project ("Ripen")
+project(Ripen)
+set(CMAKE_CXX_STANDARD 17)
 
 set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/lib)
+set(EXTERN_DIR_PATH "${PROJECT_SOURCE_DIR}/extern" CACHE PATH "Path to the external directory")
 
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/scripts")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/build_files")
+list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/build_files/cmake_scripts")
 
-#Get the actual OS and store it as a preprocessor definition to be used in source code
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-add_compile_definitions(IS_LINUX)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-add_compile_definitions(IS_MACOS)
-elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-add_compile_definitions(IS_WINDOWS)
-endif()
+include(prepdef)
+include(functions)
 
-# Get the actual compiler and store it as a preprocessor definition to be used in source code
-add_compile_definitions(COMPILER_NAME="${CMAKE_CXX_COMPILER_ID}")
-
-if(CMAKE_CXX_COMPILER_ID MATCHES Intel)
-add_compile_definitions(IS_INTEL_CXX_COMPILER)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES GNU)
-add_compile_definitions(IS_GNU_CXX_COMPILER)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES PGI)
-add_compile_definitions(IS_PGI_CXX_COMPILER)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES XL)
-add_compile_definitions(IS_XL_CXX_COMPILER)
-elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-add_compile_definitions(IS_MSVC_CXX_COMPILER)
+# avoid having empty buildtype
+if(NOT DEFINED CMAKE_BUILD_TYPE_INIT)
+  set(CMAKE_BUILD_TYPE_INIT "Release")
 endif()
 
 # See cmakelists in src folder
-include_directories("${PROJECT_SOURCE_DIR}/Src")
-add_subdirectory("Src")
+add_subdirectory("source")
 
-if(${BUILD_TESTS})
-	# See cmakelists in tests folder
-	include_directories("${PROJECT_SOURCE_DIR}/tests")
-	add_subdirectory("tests")
-endif(${BUILD_TESTS})
+########################################################
+#--------------------GTEST SETUP-----------------------#
+########################################################
+
+option(WITH_TESTS "Setup and build all unit test from projects" ON)
+
+if(WITH_TESTS)
+add_subdirectory("${EXTERN_DIR_PATH}/googletest/")
+enable_testing()
+include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+
+add_subdirectory("tests")
+endif(WITH_TESTS)
+#------------------------------------------------------#
+
+########################################################
+#--------------------External Dep----------------------#
+########################################################
+
+add_subdirectory("${EXTERN_DIR_PATH}/cxxopts")
+
+########################################################
+#--------------------Create Executable-----------------#
+########################################################
+add_executable (Ripen ${RIPEN_SF})
+
 

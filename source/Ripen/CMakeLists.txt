@@ -1,0 +1,10 @@
+﻿
+cmake_minimum_required (VERSION 3.8)
+
+set(SRC
+Ripen.cpp
+)
+PREPEND_LIST_ELEMENTS(${CMAKE_CURRENT_SOURCE_DIR} SRC)
+RIPEN_ADD_SF(${SRC})
+
+
