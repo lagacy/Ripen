@@ -1,4 +1,4 @@
-# Ripen
+# Ripen(WIP)
 Ripen is an MIT source code project pipeline manager, it is a toolbox that can be scripted to manage single or multi-langages project from start to finish.
 
 This will be the only thing you'll need to install to make your projects works, Ripen will be built around the extensibility. Most features will be made availlable as extensions that will be created with the Ripen Extension Development Kit(aka Ripen EDK).
