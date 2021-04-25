@@ -19,4 +19,4 @@ Ripen will acts on these phases:
 
 6. Continuous Delivery: Toolings for CD pipeline automation, IaC.
 
-7. Language Agnostic: Use multiple langage with some specific plugins or even incorporate your favorite tool in your pipeline script(like nodejs, Composer, etc.)
+7. Language Agnostic: Use multiple langage with some specific extensions or even incorporate your favorite tool in your pipeline script(like nodejs, Composer, etc.)
