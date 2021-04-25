@@ -18,3 +18,5 @@ Ripen will acts on these phases:
 5. Continuous Integration: Toolings for CI pipeline automation (Github Actions generation, Gitlab CI, etc...).
 
 6. Continuous Delivery: Toolings for CD pipeline automation, IaC.
+
+7. Language Agnostic: Use multiple langage with some specific plugins or even incorporate your favorite tool in your pipeline script(like nodejs, Composer, etc.)
